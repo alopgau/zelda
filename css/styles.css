@@ -14,7 +14,7 @@
   --light-green: #8bac0f; /* verde claro */
   --shiny-green: #9bbc0f; /* verde brillante */
 }
-header {
+.header {
   background-color: #0f380f;
 
   background-image:
@@ -23,12 +23,28 @@ header {
 
   background-size: 32px;
   background-repeat: repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
 }
+
 .title {
   font-family: var(--title-font);
   font-size: 1rem;
   color: var(--shiny-green);
+  padding: 1rem;
+}
+.nav__list--element {
+  font-family: var(--title-font);
+  font-size: 0.8rem;
+  color: var(--shiny-green);
+  padding: 0.5rem;
+}
+
+.icon {
+  width: 25%;
 }
 .main__content {
-  background-color: var(--green);
 }
