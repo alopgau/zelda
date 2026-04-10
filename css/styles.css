@@ -16,6 +16,7 @@
 }
 body {
   height: 1440px;
+  background-image: url(../assets/test.webp);
 }
 .header {
   background-color: #0f380f;
@@ -57,7 +58,7 @@ body {
   justify-content: center;
   align-content: center;
   flex-wrap: wrap;
-  background-color: var(--light-green);
+  background-color: #fcd8a8;
   padding: 1rem;
   height: 40%;
   width: 75%;
