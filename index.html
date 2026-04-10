@@ -9,19 +9,23 @@
   <body>
     <header class="header">
       <h1 class="title">ZeldaTracker</h1>
-      <section class="icon__section">
-        <img class="icon" src="assets/logo.webp" alt="" />
-      </section>
       <nav>
         <ul class="nav__list">
-          <li class="nav__list--element">Favoritos</li>
+          <li>
+            <a href="favoritos.html" class="nav__list--element">Favoritos</a>
+          </li>
         </ul>
       </nav>
     </header>
     <main class="main__content">
       <section class="search__section">
         <search>
-          <input type="text" name="searchbar" id="searchbar" />
+          <input
+            type="text"
+            name="searchbar"
+            id="searchbar"
+            class="searchbar"
+          />
           <select name="searchtarget" id="searchtarget">
             <option value="all">Todas</option>
             <option value="staff">Desarrolladores</option>
