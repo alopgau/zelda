@@ -9,11 +9,11 @@
 }
 :root {
   --title-font: "Press Start 2P";
-  --dark-green: #0f380f; /* verde oscuro */
-  --green: #306230; /* verde medio */
-  --light-green: #66c966; /* verde claro */
-  --shiny-green: #9bbc0f; /* verde brillante */
-  --border-color: #000;
+  --dark-green: #0f380f;
+  --green: #306230;
+  --light-green: #66c966;
+  --shiny-green: #9bbc0f;
+  --black: #000;
   --white: #fff;
   --main-color: #fcd8a8;
 }
@@ -22,53 +22,61 @@ body {
   background-color: #306230;
 }
 .header {
-  background-color: #0f380f;
-
-  background-image:
-    linear-gradient(rgba(15, 56, 15, 0.8), rgba(15, 56, 15, 0.8)),
-    url("../assets/link.webp");
-
-  background-size: 32px;
-  background-repeat: repeat;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-content: center;
   align-items: center;
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
+  background-color: #0f380f;
+  background-image:
+    linear-gradient(rgba(15, 56, 15, 0.8), rgba(15, 56, 15, 0.8)),
+    url("../assets/link.webp");
+  background-size: 32px;
+  background-repeat: repeat;
 }
 
-.title {
+.page__title {
   color: var(--shiny-green);
   font-size: 1rem;
   font-family: var(--title-font);
+  padding: 1rem;
+}
+.title {
+  color: var(--black);
+  font-size: 1rem;
+  font-family: var(--title-font);
+  text-align: center;
   padding: 1rem;
 }
 .nav__list--element {
   color: var(--shiny-green);
   font-size: 0.8rem;
   font-family: var(--title-font);
-  padding: 0.5rem;
+}
+.nav__list--element:hover {
+  color: var(--white);
 }
 .main__content {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   height: 50%;
 }
 
 .search__section {
   background-color: var(--main-color);
-  padding: 1rem;
   display: flex;
-  align-content: center;
   flex-wrap: wrap;
   height: 50%;
   width: 75%;
+  padding: 1rem;
+}
+.welcome__section {
+  background-color: var(--main-color);
 }
 .search {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -92,9 +100,22 @@ body {
   color: var(--white);
   border: var(--border-color) double 3px;
   font-family: var(--title-font);
+  text-align: center;
   box-shadow:
     0 0 0 2px black,
     2px 0 0 0 black,
     0 2px 0 0 black,
     2px 2px 0 0 black;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  background-color: #66c966;
+  height: 25%;
+}
+.footer__text {
+  font-family: var(--title-font);
+  padding: 2rem;
 }
