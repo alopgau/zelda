@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { readData } from "./api.js";
+import { getAPIData } from "./api.js";
 let category = undefined
 const readCategory = () => {
     const categorySelect = document.querySelector("#searchtarget")
@@ -19,7 +19,12 @@ const debounce = (func, delay) => {
         }, delay);
     }
 }
-searchBar.addEventListener("input", () => {
-    debounce(searchAPI, 2000)
+searchBar.addEventListener("input", (e) => {
+    debounce(() => searchAPI(category, e), 2000)
 })
+const searchAPI = (category, e) => {
+    const search = e.target.trim()
+    getAPIData(category, e)
+
+}
 

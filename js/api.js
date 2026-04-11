@@ -1,4 +1,4 @@
-export async function readData(category, search) {
+export async function getAPIData(category, search) {
     try {
         const response = await fetch(`https://zelda.fanapis.com/api/${category}/${search}`)
         if (!response.ok) throw new Error(`Error ${response.status}`);
