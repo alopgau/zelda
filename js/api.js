@@ -1,6 +1,6 @@
-async function obtenerDatos(url) {
+export async function obtenerDatos(category, search) {
     try {
-        const response = await fetch(url)
+        const response = await fetch(`https://zelda.fanapis.com/api/${category}/${search}`)
         if (!response.ok) throw new Error(`Error ${response.status}`);
 
         const data = await response.json();

@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ZeldaTracker</title>
     <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/api.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/transform.js"></script>
+    <script src="js/ui.js"></script>
   </head>
   <body>
     <header class="header">
@@ -25,25 +29,28 @@
           no temas, hemos creado este buscador para guiarte!
         </h1>
         <search class="search">
-          <input
-            type="text"
-            name="searchbar"
-            id="searchbar"
-            class="searchbar"
-          />
-          <select name="searchtarget" id="searchtarget" class="searchtarget">
-            <option value="all">Todas</option>
-            <option value="staff">Desarrolladores</option>
-            <option value="characters">Personajes</option>
-            <option value="monsters">Monstruos</option>
-            <option value="places">Lugares</option>
-            <option value="dungeons">Mazmorras</option>
-            <option value="bosses">Jefes</option>
-            <option value="items">Objetos</option>
-            <option value="games">Juegos</option>
-          </select>
+          <form action="" method="get" class="search">
+            <input
+              type="text"
+              name="searchbar"
+              id="searchbar"
+              class="searchbar"
+            />
+            <select name="searchtarget" id="searchtarget" class="searchtarget">
+              <option value="all">Todas</option>
+              <option value="staff">Desarrolladores</option>
+              <option value="characters">Personajes</option>
+              <option value="monsters">Monstruos</option>
+              <option value="places">Lugares</option>
+              <option value="dungeons">Mazmorras</option>
+              <option value="bosses">Jefes</option>
+              <option value="items">Objetos</option>
+              <option value="games">Juegos</option>
+            </select>
+          </form>
         </search>
       </section>
+      <section class="search__results"></section>
     </main>
     <footer class="footer">
       <p class="footer__text">ZeldaTracker | Made in 2026</p>

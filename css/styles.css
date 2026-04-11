@@ -58,17 +58,22 @@ body {
   color: var(--white);
 }
 .main__content {
+  background-color: var(--main-color);
   display: flex;
   justify-content: center;
+  align-content: space-around;
+  flex-wrap: wrap;
   height: 50%;
+  max-width: 50%;
+  margin: 0 auto;
 }
 
-.search__section {
-  background-color: var(--main-color);
+.search__section,
+.search__results {
   display: flex;
   flex-wrap: wrap;
   height: 50%;
-  width: 75%;
+  width: 100%;
   padding: 1rem;
 }
 .welcome__section {
