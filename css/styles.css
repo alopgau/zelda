@@ -140,3 +140,18 @@ body {
   font-size: 0.7rem;
   color: var(--white);
 }
+.card {
+  background-color: var(--light-green);
+  border: solid var(--black);
+  border-radius: 1rem;
+}
+.card__title {
+  color: var(--shiny-green);
+  font-family: var(--title-font);
+  font-size: 1rem;
+}
+.card__description {
+  color: var(--white);
+  font-family: var(--title-font);
+  font-size: 0.8rem;
+}

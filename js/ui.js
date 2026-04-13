@@ -34,6 +34,7 @@ const searchAPI = async (categories, e) => {
     const resultsSection = document.querySelector(".search__results")
     const promises = categories.map(category => getAPIData(category, search))
     const results = await Promise.all(promises)
+    resultsSection.innerHTML = ""
     results.forEach((data, index) => {
         const category = categories[index]
         switch (category) {
@@ -82,7 +83,7 @@ const searchAPI = async (categories, e) => {
                                     <h1 class="card__title">${item.name}</h1>
                                     <p class="card__description">${item.description}</p>`
                 })
-                break
+                break;
 
             default:
                 break;
