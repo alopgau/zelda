@@ -124,3 +124,8 @@ body {
   font-family: var(--title-font);
   padding: 2rem;
 }
+.option__checker {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
