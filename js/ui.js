@@ -21,7 +21,7 @@ const debounce = (func, delay) => {
 }
 searchBar.addEventListener("input", (e) => {
    const data = debounce(() => searchAPI(category, e), 2000)
-   data.data.forEach( => {
+   data.data.forEach(it => {
    });
 })
 const searchAPI = (category, e) => {
