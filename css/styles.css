@@ -141,7 +141,7 @@ body {
   color: var(--white);
 }
 .card {
-  background-color: var(--light-green);
+  background-color: var(--dark-green);
   border: solid var(--black);
   border-radius: 1rem;
 }
