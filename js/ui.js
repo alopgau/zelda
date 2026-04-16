@@ -43,7 +43,7 @@ const searchAPI = async (categories, e) => {
                     resultsSection.innerHTML += `<article class="card">
                 <h1 class="card__title">${game.name}</h1>
                 <p class="card__description">${game.description}</p>
-                <time class="game__date">${game.released__date}</time>`
+                <time class="game__date">Fecha salida: ${game.released_date}</time>`
                 })
                 break;
             case "characters":
