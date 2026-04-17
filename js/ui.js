@@ -1,11 +1,14 @@
 import { db } from "./firebase.js";
 import { getAPIData } from "./api.js";
+const loadIndex = () => {
+    if (!document.querySelector("#searchbar")) return;
+    const searchBar = document.querySelector("#searchbar")
+    searchBar.addEventListener("input", (e) => debouncedSearch(categories, e))
+    searchBar.addEventListener("focus", () => {
+        categories = readCategory()
+    })
 
-const searchBar = document.querySelector("#searchbar")
-searchBar.addEventListener("input", (e) => debouncedSearch(categories, e))
-searchBar.addEventListener("focus", () => {
-    categories = readCategory()
-})
+}
 
 let categories = undefined
 let cardButton = undefined
@@ -18,7 +21,8 @@ const loadCards = (data, category, resultsSection) => {
                 <h1 class="card__title">${game.name}</h1>
                 <p class="card__description">${game.description}</p>
                 <time class="game__date">Fecha salida: ${game.released_date}</time>
-                <button class="card__button">Añadir a Favoritos</button>`
+                <button class="card__button">Añadir a Favoritos</button>
+                </article>`
             })
             break;
         case "characters":
@@ -28,7 +32,8 @@ const loadCards = (data, category, resultsSection) => {
                     <p class="card__description">${character.description}</p>
                     <p class="character__gender">${character.gender}</p>
                     <p class="character__race">${character.race}</p>
-                    <button class="card__button">Añadir a Favoritos</button>`
+                    <button class="card__button">Añadir a Favoritos</button>
+                </article>`
             })
             break;
         case "dungeons":
@@ -36,7 +41,8 @@ const loadCards = (data, category, resultsSection) => {
                 resultsSection.innerHTML += `<article class="card" data-type="dungeon">
                         <h1 class="card__title">${dungeon.name}</h1>
                         <p class="card__description">${dungeon.description}</p>
-                        <button class="card__button">Añadir a Favoritos</button>`
+                        <button class="card__button">Añadir a Favoritos</button>
+                        </article>`
             })
             break;
         case "bosses":
@@ -44,7 +50,8 @@ const loadCards = (data, category, resultsSection) => {
                 resultsSection.innerHTML += `<article class="card" data-type="boss">
                             <h1 class="card__title">${boss.name}</h1>
                             <p class="card__description">${boss.description}</p>
-                            <button class="card__button">Añadir a Favoritos</button>`
+                            <button class="card__button">Añadir a Favoritos</button>
+                            </article>`
 
             })
             break;
@@ -53,7 +60,8 @@ const loadCards = (data, category, resultsSection) => {
                 resultsSection.innerHTML += `<article class="card" data-type="place">
                                 <h1 class="card__title">${place.name}</h1>
                                 <p class="card__description">${place.description}</p>
-                                <button class="card__button">Añadir a Favoritos</button>`
+                                <button class="card__button">Añadir a Favoritos</button>
+                                </article>`
 
             })
             break;
@@ -62,7 +70,8 @@ const loadCards = (data, category, resultsSection) => {
                 resultsSection.innerHTML += `<article class="card" data-type="item">
                                     <h1 class="card__title">${item.name}</h1>
                                     <p class="card__description">${item.description}</p>
-                                    <button class="card__button">Añadir a Favoritos</button>`
+                                    <button class="card__button">Añadir a Favoritos</button>
+                                    </article>`
             })
             break;
 
@@ -121,26 +130,27 @@ const getLS = () => {
 const addToFavorites = (e) => {
     const data = getLS()
     const card = e.target.parentElement
-    debugger
     const cardChildren = Array.from(card.children).filter((it) => it != e.target)
     const title = cardChildren[0].textContent
     const description = cardChildren[1].textContent
     let gameDate = undefined
     let characterGender = undefined
     let characterRace = undefined
+    let type = card.dataset.type
 
-    switch (card.dataset.type) {
+    switch (type) {
         case "character":
             characterGender = cardChildren[2].textContent
             characterRace = cardChildren[3].textContent
-            data.push({ title, description, gameDate, characterGender, characterRace })
+            data.push({ title, description, gameDate, characterGender, characterRace, type })
             break;
         case "game":
             gameDate = cardChildren[2].textContent
-            data.push({ title, description, gameDate, characterGender, characterRace })
+            data.push({ title, description, gameDate, characterGender, characterRace, type })
+
 
         default:
-            data.push({ title, description, gameDate, characterGender, characterRace })
+            data.push({ title, description, gameDate, characterGender, characterRace, type })
             break;
     }
 
@@ -148,5 +158,43 @@ const addToFavorites = (e) => {
     localStorage.setItem("favoritesData", JSON.stringify(data))
 }
 const loadFavorites = () => {
+    if (!document.querySelector(".favorites__section")) return;
+    const favoritesSection = document.querySelector(".favorites__section")
+    const data = getLS()
+    data.forEach(card => {
+        switch (card.type) {
+            case "character":
+
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
+                <h1 class="card__title">${card.title}</h1>
+                <p class="card__description">${card.description}</p>
+                <p class="character__gender">${character.gender}</p>
+                <p class="character__race">${character.race}</p>
+                </article>`
+
+                break;
+
+            case "game":
+
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
+                <h1 class="card__title">${card.title}</h1>
+                <p class="card__description">${card.description}</p>
+                <time class="game__date">Fecha salida: ${card.gameDate}</time>
+                </article>`
+
+                break;
+
+            default:
+
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
+                <h1 class="card__title">${card.title}</h1>
+                <p class="card__description">${card.description}</p>
+                </article>`
+
+                break;
+        }
+    })
 
 }
+loadIndex();
+loadFavorites();
