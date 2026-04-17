@@ -100,19 +100,7 @@ body {
     0 2px 0 0 black,
     2px 2px 0 0 black;
 }
-.searchtarget {
-  background-color: var(--light-green);
-  width: 50%;
-  color: var(--white);
-  border: var(--border-color) double 3px;
-  font-family: var(--title-font);
-  text-align: center;
-  box-shadow:
-    0 0 0 2px black,
-    2px 0 0 0 black,
-    0 2px 0 0 black,
-    2px 2px 0 0 black;
-}
+
 .footer {
   display: flex;
   justify-content: center;
@@ -127,11 +115,17 @@ body {
 }
 .option-checker {
   background-color: var(--light-green);
+  border: double;
   display: flex;
   gap: 0.45rem;
   padding: 1rem;
   flex-direction: column;
   width: 50%;
+  box-shadow:
+    0 0 0 2px black,
+    2px 0 0 0 black,
+    0 2px 0 0 black,
+    2px 2px 0 0 black;
 }
 .option-checker__label {
   font-family: var(--title-font);
@@ -166,10 +160,24 @@ body {
   max-width: 75%;
   gap: 1rem;
 }
-.game__date {
+.game__date,
+.character__gender,
+.character__race {
   color: var(--white);
   font-family: var(--title-font);
   text-align: center;
   font-size: 0.7rem;
   text-wrap: nowrap;
+}
+.card__button {
+  background-color: var(--light-green);
+  color: var(--black);
+  font-family: var(--title-font);
+  padding: 1rem;
+  border: double;
+  box-shadow:
+    0 0 0 2px black,
+    2px 0 0 0 black,
+    0 2px 0 0 black,
+    2px 2px 0 0 black;
 }

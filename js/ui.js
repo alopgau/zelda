@@ -43,7 +43,8 @@ const searchAPI = async (categories, e) => {
                     resultsSection.innerHTML += `<article class="card">
                 <h1 class="card__title">${game.name}</h1>
                 <p class="card__description">${game.description}</p>
-                <time class="game__date">Fecha salida: ${game.released_date}</time>`
+                <time class="game__date">Fecha salida: ${game.released_date}</time>
+                <button class="card__button">Añadir a Favoritos</button>`
                 })
                 break;
             case "characters":
@@ -52,21 +53,24 @@ const searchAPI = async (categories, e) => {
                     <h1 class="card__title">${character.name}</h1>
                     <p class="card__description">${character.description}</p>
                     <p class="character__gender">${character.gender}</p>
-                    <p class="character__race">${character.race}</p>`
+                    <p class="character__race">${character.race}</p>
+                    <button class="card__button">Añadir a Favoritos</button>`
                 })
                 break;
             case "dungeons":
                 data.data.forEach((dungeon) => {
                     resultsSection.innerHTML += `<article class="card">
                         <h1 class="card__title">${dungeon.name}</h1>
-                        <p class="card__description">${dungeon.description}</p>`
+                        <p class="card__description">${dungeon.description}</p>
+                        <button class="card__button">Añadir a Favoritos</button>`
                 })
                 break;
             case "bosses":
                 data.data.forEach((boss) => {
                     resultsSection.innerHTML += `<article class="card">
                             <h1 class="card__title">${boss.name}</h1>
-                            <p class="card__description">${boss.description}</p>`
+                            <p class="card__description">${boss.description}</p>
+                            <button class="card__button">Añadir a Favoritos</button>`
 
                 })
                 break;
@@ -74,14 +78,16 @@ const searchAPI = async (categories, e) => {
                 data.data.forEach((place) => {
                     resultsSection.innerHTML += `<article class="card">
                                 <h1 class="card__title">${place.name}</h1>
-                                <p class="card__description">${place.description}</p>`
+                                <p class="card__description">${place.description}</p>
+                                <button class="card__button">Añadir a Favoritos</button>`
 
                 })
             case "items":
                 data.data.forEach((item) => {
                     resultsSection.innerHTML += `<article class="card">
                                     <h1 class="card__title">${item.name}</h1>
-                                    <p class="card__description">${item.description}</p>`
+                                    <p class="card__description">${item.description}</p>
+                                    <button class="card__button">Añadir a Favoritos</button>`
                 })
                 break;
 
