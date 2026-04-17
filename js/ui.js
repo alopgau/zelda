@@ -1,13 +1,20 @@
 import { db } from "./firebase.js";
 import { getAPIData } from "./api.js";
 
+const searchBar = document.querySelector("#searchbar")
+searchBar.addEventListener("input", (e) => debouncedSearch(categories, e))
+searchBar.addEventListener("focus", () => {
+    categories = readCategory()
+})
+
 let categories = undefined
+let cardButton = undefined
 
 const loadCards = (data, category, resultsSection) => {
     switch (category) {
         case "games":
             data.data.forEach((game) => {
-                resultsSection.innerHTML += `<article class="card">
+                resultsSection.innerHTML += `<article class="card" data-type="game">
                 <h1 class="card__title">${game.name}</h1>
                 <p class="card__description">${game.description}</p>
                 <time class="game__date">Fecha salida: ${game.released_date}</time>
@@ -74,10 +81,7 @@ const readCategory = () => {
     })
     return checks
 }
-const searchBar = document.querySelector("#searchbar")
-searchBar.addEventListener("focus", () => {
-    categories = readCategory()
-})
+
 const debounce = (func, delay) => {
     let timeout;
     return function (...args) {
@@ -91,7 +95,7 @@ const debounce = (func, delay) => {
 const debouncedSearch = debounce((categories, e) => {
     searchAPI(categories, e)
 }, 2000)
-searchBar.addEventListener("input", (e) => debouncedSearch(categories, e))
+
 const searchAPI = async (categories, e) => {
     const search = e.target.value.trim()
     const resultsSection = document.querySelector(".search__results")
@@ -103,6 +107,10 @@ const searchAPI = async (categories, e) => {
         loadCards(data, category, resultsSection)
 
     })
+    cardButton = document.querySelectorAll(".card__button")
+    cardButton.forEach((it) => {
+        it.addEventListener("click", addToFavorites)
+    })
 
 }
 const getLS = () => {
@@ -113,21 +121,22 @@ const getLS = () => {
 const addToFavorites = (e) => {
     const data = getLS()
     const card = e.target.parentElement
-    const cardChildren = card.children.filter((it) => it != e.target)
-    const title = cardChildren[0]
-    const description = cardChildren[1]
+    debugger
+    const cardChildren = Array.from(card.children).filter((it) => it != e.target)
+    const title = cardChildren[0].textContent
+    const description = cardChildren[1].textContent
     let gameDate = undefined
     let characterGender = undefined
     let characterRace = undefined
 
     switch (card.dataset.type) {
         case "character":
-            characterGender = cardChildren[2]
-            characterRace = cardChildren[3]
+            characterGender = cardChildren[2].textContent
+            characterRace = cardChildren[3].textContent
             data.push({ title, description, gameDate, characterGender, characterRace })
             break;
         case "game":
-            gameDate = cardChildren[2]
+            gameDate = cardChildren[2].textContent
             data.push({ title, description, gameDate, characterGender, characterRace })
 
         default:
