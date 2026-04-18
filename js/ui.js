@@ -1,5 +1,7 @@
 import { db } from "./firebase.js";
 import { getAPIData } from "./api.js";
+import { addDoc, collection, getDocs }
+    from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 const loadIndex = () => {
     if (!document.querySelector("#searchbar")) return;
     const searchBar = document.querySelector("#searchbar")
@@ -127,40 +129,58 @@ const getLS = () => {
     return data ? JSON.parse(data) : [];
 };
 
-const addToFavorites = (e) => {
-    const data = getLS()
+const addToFavorites = async (e) => {
     const card = e.target.parentElement
     const cardChildren = Array.from(card.children).filter((it) => it != e.target)
     const title = cardChildren[0].textContent
     const description = cardChildren[1].textContent
-    let gameDate = undefined
-    let characterGender = undefined
-    let characterRace = undefined
+    let gameDate = null
+    let characterGender = null
+    let characterRace = null
     let type = card.dataset.type
 
     switch (type) {
         case "character":
             characterGender = cardChildren[2].textContent
             characterRace = cardChildren[3].textContent
-            data.push({ title, description, gameDate, characterGender, characterRace, type })
             break;
         case "game":
             gameDate = cardChildren[2].textContent
-            data.push({ title, description, gameDate, characterGender, characterRace, type })
 
 
         default:
-            data.push({ title, description, gameDate, characterGender, characterRace, type })
             break;
     }
+    try {
+        await addDoc(collection(db, "favorites"), {
+            title,
+            description,
+            gameDate,
+            characterGender,
+            characterRace,
+            type
+        });
+
+        console.log("Guardado en Firebase");
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const getFavorites = async () => {
+    const snapshot = await getDocs(collection(db, "favorites"));
+
+    return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+};
 
 
-    localStorage.setItem("favoritesData", JSON.stringify(data))
-}
-const loadFavorites = () => {
+const loadFavorites = async () => {
     if (!document.querySelector(".favorites__section")) return;
     const favoritesSection = document.querySelector(".favorites__section")
-    const data = getLS()
+    const data = await getFavorites()
     data.forEach(card => {
         switch (card.type) {
             case "character":
@@ -168,8 +188,8 @@ const loadFavorites = () => {
                 favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
-                <p class="character__gender">${character.gender}</p>
-                <p class="character__race">${character.race}</p>
+                <p class="character__gender">${card.gender}</p>
+                <p class="character__race">${card.race}</p>
                 </article>`
 
                 break;
