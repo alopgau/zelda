@@ -124,10 +124,6 @@ const searchAPI = async (categories, e) => {
     })
 
 }
-const getLS = () => {
-    const data = localStorage.getItem("favoritesData");
-    return data ? JSON.parse(data) : [];
-};
 
 const addToFavorites = async (e) => {
     const card = e.target.parentElement
@@ -178,6 +174,7 @@ const getFavorites = async () => {
 
 
 const loadFavorites = async () => {
+
     if (!document.querySelector(".favorites__section")) return;
     const favoritesSection = document.querySelector(".favorites__section")
     const data = await getFavorites()
@@ -188,8 +185,8 @@ const loadFavorites = async () => {
                 favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
-                <p class="character__gender">${card.gender}</p>
-                <p class="character__race">${card.race}</p>
+                <p class="character__gender">${card.characterGender}</p>
+                <p class="character__race">${card.characterRace}</p>
                 </article>`
 
                 break;
