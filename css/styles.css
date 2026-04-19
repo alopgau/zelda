@@ -181,3 +181,13 @@ body {
     0 2px 0 0 black,
     2px 2px 0 0 black;
 }
+.error {
+  color: var(--white);
+  font-family: var(--title-font);
+  text-align: center;
+}
+.error__card {
+  width: 100%;
+  background-color: var(--dark-green);
+  grid-column: -1 / 1;
+}

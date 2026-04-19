@@ -1,6 +1,5 @@
 export async function getAPIData(category, search) {
     if (localStorage.getItem(`${category}${search}`)) {
-        debugger
         const data = localStorage.getItem(`${category}${search}`)
         return JSON.parse(data)
     } else {
@@ -12,8 +11,9 @@ export async function getAPIData(category, search) {
             localStorage.setItem(`${category}${search}`, data)
             return data
         } catch (error) {
-            const card = document.querySelector(".error__card")
-            card.classList.toggle("hidden")
+            const resultsSection = document.querySelector(".results__section")
+            resultsSection.innerHTML += `<article class='error__card'><p class='errorText'>Se produjo un error inesperado</p></article>`
+            return []
         }
 
     }
