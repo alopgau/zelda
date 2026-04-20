@@ -173,6 +173,7 @@ const getFavorites = async () => {
 };
 
 
+
 const loadFavorites = async () => {
 
     if (!document.querySelector(".favorites__section")) return;
@@ -196,7 +197,7 @@ const loadFavorites = async () => {
                 favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
-                <time class="game__date">Fecha salida: ${card.gameDate}</time>
+                <time class="game__date">${card.gameDate}</time>
                 </article>`
 
                 break;
@@ -209,6 +210,21 @@ const loadFavorites = async () => {
                 </article>`
 
                 break;
+        }
+    })
+    const filters = document.querySelectorAll(".filter")
+    filters.forEach((filter) => {
+        filter.addEventListener("click", filterByCategory)
+    })
+
+}
+const filterByCategory = (e) => {
+    const filter = e.target.name
+    const favsSection = document.querySelector(".favorites__section")
+    const favs = Array.from(favsSection.children)
+    favs.forEach((fav) => {
+        if (fav.dataset.type != filter) {
+            fav.classList.toggle("hidden")
         }
     })
 

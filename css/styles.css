@@ -127,7 +127,8 @@ body {
     0 2px 0 0 black,
     2px 2px 0 0 black;
 }
-.option-checker__label {
+.option-checker__label,
+.filter__label {
   font-family: var(--title-font);
   font-size: 0.7rem;
   color: var(--white);
@@ -190,4 +191,20 @@ body {
   width: 100%;
   background-color: var(--dark-green);
   grid-column: -1 / 1;
+}
+.filters {
+  background-color: var(--light-green);
+  border: double;
+  display: flex;
+  gap: 0.45rem;
+  padding: 1rem;
+  flex-direction: column;
+  box-shadow:
+    0 0 0 2px black,
+    2px 0 0 0 black,
+    0 2px 0 0 black,
+    2px 2px 0 0 black;
+}
+.hidden {
+  display: none;
 }
