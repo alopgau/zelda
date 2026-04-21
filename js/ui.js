@@ -154,10 +154,10 @@ const addToFavorites = async (e) => {
             gameDate,
             characterGender,
             characterRace,
-            type
+            type,
+            createdAt: serverTimestamp()
+            
         });
-
-        console.log("Guardado en Firebase");
     } catch (error) {
         console.error(error);
     }
@@ -183,7 +183,7 @@ const loadFavorites = async () => {
         switch (card.type) {
             case "character":
 
-                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
                 <p class="character__gender">${card.characterGender}</p>
@@ -194,7 +194,7 @@ const loadFavorites = async () => {
 
             case "game":
 
-                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
                 <time class="game__date">${card.gameDate}</time>
@@ -204,7 +204,7 @@ const loadFavorites = async () => {
 
             default:
 
-                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}">
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
                 </article>`
@@ -229,5 +229,6 @@ const filterByCategory = (e) => {
     })
 
 }
+
 loadIndex();
 loadFavorites();
