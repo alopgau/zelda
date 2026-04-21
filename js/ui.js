@@ -1,6 +1,6 @@
 import { db } from "./firebase.js";
 import { getAPIData } from "./api.js";
-import { addDoc, collection, getDocs }
+import { addDoc, collection, getDocs, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 const loadIndex = () => {
     if (!document.querySelector("#searchbar")) return;
@@ -156,7 +156,7 @@ const addToFavorites = async (e) => {
             characterRace,
             type,
             createdAt: serverTimestamp()
-            
+
         });
     } catch (error) {
         console.error(error);
@@ -227,6 +227,17 @@ const filterByCategory = (e) => {
             fav.classList.toggle("hidden")
         }
     })
+
+}
+const orderFromOlderToNewer = (e) => {
+    const favsSection = document.querySelector(".favorites__section")
+    const favs = favsSection.children
+    favs.sort((a, b) => a.createdAt.toMilis() - b.createdAt.toMilis())
+    favsSection.innerHTML = ""
+    favs.forEach((fav) => {
+        favsSection.appendChild(fav)
+    })
+
 
 }
 

@@ -8,7 +8,7 @@ export async function getAPIData(category, search) {
             if (!response.ok) throw new Error(`Error ${response.status}`);
 
             const data = await response.json();
-            localStorage.setItem(`${category}${search}`, data)
+            localStorage.setItem(`${category}${search}`, JSON.stringify(data))
             return data
         } catch (error) {
             const resultsSection = document.querySelector(".results__section")
