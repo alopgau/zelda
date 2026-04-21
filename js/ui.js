@@ -229,10 +229,15 @@ const filterByCategory = (e) => {
     })
 
 }
-const orderFromOlderToNewer = (e) => {
+const order = (e) => {
     const favsSection = document.querySelector(".favorites__section")
     const favs = favsSection.children
-    favs.sort((a, b) => a.createdAt.toMilis() - b.createdAt.toMilis())
+    if (e.target.name === "newFirst") {
+        favs.sort((a, b) => a.createdAt.toMilis() - b.createdAt.toMilis())
+    } else {
+        favs.sort((a, b) => b.createdAt.toMilis() - a.createdAt.toMilis())
+
+    }
     favsSection.innerHTML = ""
     favs.forEach((fav) => {
         favsSection.appendChild(fav)
