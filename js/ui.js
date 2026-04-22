@@ -216,6 +216,11 @@ const loadFavorites = async () => {
     filters.forEach((filter) => {
         filter.addEventListener("click", filterByCategory)
     })
+    const orderButtons = document.querySelectorAll(".order")
+    orderButtons.forEach((button) => {
+        button.addEventListener("click", order)
+    })
+
 
 }
 const filterByCategory = (e) => {
@@ -232,17 +237,26 @@ const filterByCategory = (e) => {
 const order = (e) => {
     const favsSection = document.querySelector(".favorites__section")
     const favs = favsSection.children
-    if (e.target.name === "newFirst") {
-        favs.sort((a, b) => a.createdAt.toMilis() - b.createdAt.toMilis())
-    } else {
-        favs.sort((a, b) => b.createdAt.toMilis() - a.createdAt.toMilis())
-
+    switch (e.target.id) {
+        case "oldFirst":
+            favs.sort((a, b) => a.createdAt.toMilis() - b.createdAt.toMilis())
+            break;
+        case "newFirst":
+            favs.sort((a, b) => b.createdAt.toMilis() - a.createdAt.toMilis())
+            break;
+            case "Z-A":
+            favs.sort((a, b) => b.title.localeCompare(a))
+            break;
+            case "A-Z":
+            favs.sort((a, b) => a.title.localeCompare(b))
+            break;
+        default:
+            break;
     }
     favsSection.innerHTML = ""
     favs.forEach((fav) => {
         favsSection.appendChild(fav)
     })
-
 
 }
 
