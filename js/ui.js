@@ -230,8 +230,8 @@ const loadFavorites = async () => {
     deleteButtons.forEach((button) => {
         button.addEventListener("click", deleteFavorite)
     })
-
-
+    const deleteAllButton = document.querySelector("#all")
+    deleteAllButton.addEventListener("click", deleteAll)
 
 
 }
@@ -278,16 +278,22 @@ const deleteFavorite = async (e) => {
 
     const favoriteId = card.dataset.id;
 
-    if (!favoriteId) {
-        console.error("No se encontró el ID del documento");
-        return;
-    }
-
     const favoriteDocRef = doc(db, "favorites", favoriteId);
     await deleteDoc(favoriteDocRef);
 
     card.remove();
 
+}
+const deleteAll = () => {
+    const favsSection = document.querySelector(".favorites__section")
+    const favs = Array.from(favsSection.children)
+    favs.forEach(async (fav) => {
+        const favoriteId = fav.dataset.id;
+
+        const favoriteDocRef = doc(db, "favorites", favoriteId);
+        await deleteDoc(favoriteDocRef);
+        fav.remove();
+    })
 }
 
 loadIndex();
