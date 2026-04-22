@@ -1,6 +1,6 @@
 import { db } from "./firebase.js";
 import { getAPIData } from "./api.js";
-import { addDoc, collection, getDocs, serverTimestamp }
+import { addDoc, collection, getDocs, deleteDoc, doc }
     from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 const loadIndex = () => {
     if (!document.querySelector("#searchbar")) return;
@@ -90,6 +90,7 @@ const readCategory = () => {
     categorySelect.forEach(option => {
         if (option.checked) checks.push(option.value)
     })
+    if (checks.length == 0) return ["games", "dungeons", "characters", "monsters", "bosses", "places", "items"]
     return checks
 }
 
@@ -155,7 +156,7 @@ const addToFavorites = async (e) => {
             characterGender,
             characterRace,
             type,
-            createdAt: serverTimestamp()
+            createdAt: Date.now()
 
         });
     } catch (error) {
@@ -179,34 +180,39 @@ const loadFavorites = async () => {
     if (!document.querySelector(".favorites__section")) return;
     const favoritesSection = document.querySelector(".favorites__section")
     const data = await getFavorites()
+
     data.forEach(card => {
+
         switch (card.type) {
             case "character":
 
-                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}">
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}" data-id="${card.id} data-title="${card.title}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
                 <p class="character__gender">${card.characterGender}</p>
                 <p class="character__race">${card.characterRace}</p>
+                <button class="deleteButton">Eliminar de favoritos</button>
                 </article>`
 
                 break;
 
             case "game":
 
-                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}">
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}" data-id="${card.id}" data-title="${card.title}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
                 <time class="game__date">${card.gameDate}</time>
+                <button class="deleteButton">Eliminar de favoritos</button>
                 </article>`
 
                 break;
 
             default:
 
-                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}">
+                favoritesSection.innerHTML += `<article class="card" data-type="${card.type}" data-date="${card.createdAt}" data-id="${card.id}" data-title="${card.title}">
                 <h1 class="card__title">${card.title}</h1>
                 <p class="card__description">${card.description}</p>
+                <button class="deleteButton">Eliminar de favoritos</button>
                 </article>`
 
                 break;
@@ -216,10 +222,16 @@ const loadFavorites = async () => {
     filters.forEach((filter) => {
         filter.addEventListener("click", filterByCategory)
     })
-    const orderButtons = document.querySelectorAll(".order")
+    const orderButtons = document.querySelectorAll(".order__button")
     orderButtons.forEach((button) => {
-        button.addEventListener("click", order)
+        button.addEventListener("click", chooseOrder)
     })
+    const deleteButtons = document.querySelectorAll(".deleteButton")
+    deleteButtons.forEach((button) => {
+        button.addEventListener("click", deleteFavorite)
+    })
+
+
 
 
 }
@@ -234,21 +246,21 @@ const filterByCategory = (e) => {
     })
 
 }
-const order = (e) => {
+const chooseOrder = (e) => {
     const favsSection = document.querySelector(".favorites__section")
-    const favs = favsSection.children
+    const favs = Array.from(favsSection.children)
     switch (e.target.id) {
         case "oldFirst":
-            favs.sort((a, b) => a.createdAt.toMilis() - b.createdAt.toMilis())
+            favs.sort((a, b) => a.dataset.date - b.dataset.date)
             break;
         case "newFirst":
-            favs.sort((a, b) => b.createdAt.toMilis() - a.createdAt.toMilis())
+            favs.sort((a, b) => b.dataset.date - a.dataset.date)
             break;
-            case "Z-A":
-            favs.sort((a, b) => b.title.localeCompare(a))
+        case "Z-A":
+            favs.sort((a, b) => b.dataset.title.localeCompare(a.dataset.title))
             break;
-            case "A-Z":
-            favs.sort((a, b) => a.title.localeCompare(b))
+        case "A-Z":
+            favs.sort((a, b) => a.dataset.title.localeCompare(b.dataset.title))
             break;
         default:
             break;
@@ -257,6 +269,24 @@ const order = (e) => {
     favs.forEach((fav) => {
         favsSection.appendChild(fav)
     })
+
+}
+
+const deleteFavorite = async (e) => {
+
+    const card = e.target.parentElement;
+
+    const favoriteId = card.dataset.id;
+
+    if (!favoriteId) {
+        console.error("No se encontró el ID del documento");
+        return;
+    }
+
+    const favoriteDocRef = doc(db, "favorites", favoriteId);
+    await deleteDoc(favoriteDocRef);
+
+    card.remove();
 
 }
 
