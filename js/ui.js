@@ -296,5 +296,22 @@ const deleteAll = () => {
     })
 }
 
+const loadCatalog = async () => {
+    if (!document.querySelector(".catalog__section")) return
+    const response = await fetch("../data/juegos.json")
+    const data = await response.json()
+    const catalog = document.querySelector(".catalog__section")
+    data.saga.juego.forEach((game => {
+        catalog.innerHTML += `<article class="card" data-id="${game.$.id}">
+        <h1 class="card__title">${game.titulo[0]}</h1>
+        <p class="card__developer"> ${game.desarrolladora[0]}</p>
+        <p class="card__publisher"> ${game.publicadora[0]}</p>
+        <p class="card__plataform"> ${game.plataforma[0]}</p>
+        <p class="card__year"> ${game.anio[0]}</p>
+        <p class="card__mark"> ${game.puntuacion[0]}</p>`
+    }))
+}
+
 loadIndex();
 loadFavorites();
+loadCatalog();
