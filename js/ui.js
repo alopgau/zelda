@@ -179,8 +179,14 @@ const loadFavorites = async () => {
 
     if (!document.querySelector(".favorites__section")) return;
     const favoritesSection = document.querySelector(".favorites__section")
+    const emptyAdvice = document.querySelector("#empty")
     const data = await getFavorites()
+    if (data.length == 0) {
+        emptyAdvice.classList.remove("hidden")
 
+    } else {
+        emptyAdvice.classList.add("hidden")
+    }
     data.forEach(card => {
 
         switch (card.type) {
@@ -273,27 +279,34 @@ const chooseOrder = (e) => {
 }
 
 const deleteFavorite = async (e) => {
+    const modalConfirm = await showModal()
+    if (modalConfirm) {
+        const card = e.target.parentElement;
 
-    const card = e.target.parentElement;
-
-    const favoriteId = card.dataset.id;
-
-    const favoriteDocRef = doc(db, "favorites", favoriteId);
-    await deleteDoc(favoriteDocRef);
-
-    card.remove();
-
-}
-const deleteAll = () => {
-    const favsSection = document.querySelector(".favorites__section")
-    const favs = Array.from(favsSection.children)
-    favs.forEach(async (fav) => {
-        const favoriteId = fav.dataset.id;
+        const favoriteId = card.dataset.id;
 
         const favoriteDocRef = doc(db, "favorites", favoriteId);
         await deleteDoc(favoriteDocRef);
-        fav.remove();
-    })
+
+        card.remove();
+        await checkEmpty()
+    }
+
+}
+const deleteAll = async () => {
+    const modalConfirm = await showModal()
+    if (modalConfirm) {
+        const favsSection = document.querySelector(".favorites__section")
+        const favs = Array.from(favsSection.children)
+        favs.forEach(async (fav) => {
+            const favoriteId = fav.dataset.id;
+
+            const favoriteDocRef = doc(db, "favorites", favoriteId);
+            await deleteDoc(favoriteDocRef);
+            fav.remove();
+        })
+        await checkEmpty()
+    }
 }
 
 const loadCatalog = async () => {
@@ -310,6 +323,30 @@ const loadCatalog = async () => {
         <p class="card__year"> ${game.anio[0]}</p>
         <p class="card__mark"> ${game.puntuacion[0]}</p>`
     }))
+}
+const checkEmpty = async () => {
+    const data = await getFavorites()
+    const emptyCard = document.querySelector("#empty")
+    if (data.length == 0) emptyCard.classList.remove("hidden")
+}
+const showModal = async () => {
+    return new Promise((resolve) => {
+        const modal = document.querySelector(".modal")
+        modal.classList.toggle("hidden")
+        const cancelButton = document.querySelector("#modal__cancel")
+        const acceptButton = document.querySelector("#modal__accept")
+        cancelButton.addEventListener("click", () => {
+            modal.classList.toggle("hidden")
+            resolve(false)
+        })
+        acceptButton.addEventListener("click", () => {
+            modal.classList.toggle("hidden")
+            resolve(true)
+        })
+
+    })
+
+
 }
 
 loadIndex();

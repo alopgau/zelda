@@ -35,6 +35,7 @@ body {
     url("../assets/link.webp");
   background-size: 32px;
   background-repeat: repeat;
+  position: relative;
 }
 
 .page__title {
@@ -126,6 +127,7 @@ body {
   display: flex;
   gap: 0.45rem;
   padding: 1rem;
+  gap: 1rem;
   flex-direction: column;
   width: 40%;
   box-shadow:
@@ -150,6 +152,7 @@ body {
   padding: 1rem;
   gap: 0.5rem;
   width: 100%;
+  align-items: center;
 }
 
 .card__title {
@@ -172,7 +175,7 @@ body {
 .search__results {
   display: grid;
   grid-template-columns: 2fr 2fr;
-  max-width: 75%;
+  max-width: 100%;
   gap: 1rem;
 }
 .game__date,
@@ -230,9 +233,9 @@ body {
   font-size: 0.85rem;
 }
 .params__section {
-  width: 75%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-content: center;
 }
 .catalog__section {
@@ -242,5 +245,47 @@ body {
 }
 .deleteSection {
   display: flex;
-  align-content: center;
+  justify-content: center;
+}
+.deleteButton {
+  width: 50%;
+  background-color: red;
+  font-family: var(--title-font);
+  color: #fff;
+  font-size: 0.7rem;
+}
+.favorites__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.order__button {
+  background-color: var(--green);
+  font-family: var(--title-font);
+  color: var(--shiny-green);
+  font-size: 0.65rem;
+  box-shadow:
+    0 0 0 2px black,
+    2px 0 0 0 black,
+    0 2px 0 0 black,
+    2px 2px 0 0 black;
+  border: var(--black) double;
+}
+.modal {
+  position: absolute;
+  z-index: 1;
+  width: 40%;
+  top: 300%;
+}
+.modal__buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.deleteButton--big {
+  width: 50%;
+  background-color: red;
+  font-family: var(--title-font);
+  color: #fff;
+  padding: 1rem;
 }
