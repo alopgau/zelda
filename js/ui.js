@@ -306,7 +306,7 @@ const loadCatalog = async () => {
         <h1 class="card__title">${game.titulo[0]}</h1>
         <p class="card__developer"> ${game.desarrolladora[0]}</p>
         <p class="card__publisher"> ${game.publicadora[0]}</p>
-        <p class="card__plataform"> ${game.plataforma[0]}</p>
+        <p class="card__platform"> ${game.plataforma[0]}</p>
         <p class="card__year"> ${game.anio[0]}</p>
         <p class="card__mark"> ${game.puntuacion[0]}</p>`
     }))
