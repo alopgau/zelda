@@ -232,7 +232,7 @@ const loadFavorites = async () => {
     orderButtons.forEach((button) => {
         button.addEventListener("click", chooseOrder)
     })
-    const deleteButtons = document.querySelectorAll(".deleteButton")
+    const deleteButtons = Array.from(document.querySelectorAll(".deleteButton")).filter((button) => button.id != "all")
     deleteButtons.forEach((button) => {
         button.addEventListener("click", deleteFavorite)
     })
@@ -279,7 +279,7 @@ const chooseOrder = (e) => {
 }
 
 const deleteFavorite = async (e) => {
-    const modalConfirm = await showModal()
+    const modalConfirm = await showModal(e)
     if (modalConfirm) {
         const card = e.target.parentElement;
 
@@ -293,8 +293,9 @@ const deleteFavorite = async (e) => {
     }
 
 }
-const deleteAll = async () => {
-    const modalConfirm = await showModal()
+const deleteAll = async (e) => {
+    const modalConfirm = await showModal(e)
+
     if (modalConfirm) {
         const favsSection = document.querySelector(".favorites__section")
         const favs = Array.from(favsSection.children)
@@ -329,25 +330,44 @@ const checkEmpty = async () => {
     const emptyCard = document.querySelector("#empty")
     if (data.length == 0) emptyCard.classList.remove("hidden")
 }
-const showModal = async () => {
+const showModal = async (e) => {
     return new Promise((resolve) => {
+
         const modal = document.querySelector(".modal")
+        const desc = document.querySelector("#modal__description")
+        if (e.target.id == "all") {
+            desc.textContent = "¿Seguro que quieres borrar todos los elementos?"
+        } else {
+            desc.textContent = "¿Seguro que quieres borrar este elemento?"
+
+        }
         modal.classList.toggle("hidden")
         const cancelButton = document.querySelector("#modal__cancel")
         const acceptButton = document.querySelector("#modal__accept")
-        cancelButton.addEventListener("click", () => {
+
+        const handleCancel = () => {
+            const acceptButton = document.querySelector("#modal__accept")
+            const cancelButton = document.querySelector("#modal__cancel")
+            cancelButton.removeEventListener("click", handleCancel)
+            acceptButton.removeEventListener("click", handleAccept)
             modal.classList.toggle("hidden")
             resolve(false)
-        })
-        acceptButton.addEventListener("click", () => {
+        }
+        const handleAccept = () => {
+            const cancelButton = document.querySelector("#modal__cancel")
+            const acceptButton = document.querySelector("#modal__accept")
             modal.classList.toggle("hidden")
+            cancelButton.removeEventListener("click", handleCancel)
+            acceptButton.removeEventListener("click", handleAccept)
             resolve(true)
-        })
-
+        }
+        cancelButton.addEventListener("click", handleCancel)
+        acceptButton.addEventListener("click", handleAccept)
     })
-
-
 }
+
+
+
 
 loadIndex();
 loadFavorites();
