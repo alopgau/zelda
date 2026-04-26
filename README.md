@@ -111,7 +111,9 @@ El que uso valida que cada juego tenga:
   Todos los campos son required porque todos estos son los campos minimos de cualquier endpoint de la zeldaAPI. He incluido additionalProperties: true para que todos los endpoints sean válidos aun teniendo campos extra
 
 **Evidencia de validación:**  
-_(incluye una captura o el comando que usaste para validarlo, por ejemplo con `ajv` o `json-schema-validator`)_
+
+<img width="1925" height="1105" alt="Captura de pantalla_20260426_151549" src="https://github.com/user-attachments/assets/16996d55-782e-4811-a8b3-af7965892a29" />
+
 
 ### XSD (para `juegos.xml`)
 
@@ -124,7 +126,8 @@ El que uso valida la estructura del XML predeterminado del proyecto:
 - Tipos de datos: números para `<anio>` y `<puntuacion>`
 
 **Evidencia de validación:**  
-_(incluye captura de validación con herramienta o comando)_
+
+<img width="1925" height="1150" alt="Captura de pantalla_20260426_151815" src="https://github.com/user-attachments/assets/1346e712-7a4f-430e-b30c-c37b4cda6978" />
 
 ---
 
