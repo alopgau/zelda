@@ -187,7 +187,8 @@ body {
   font-size: 0.7rem;
   text-wrap: nowrap;
 }
-.card__button {
+.card__button,
+.download__button {
   background-color: var(--light-green);
   color: var(--black);
   font-family: var(--title-font);
@@ -288,4 +289,13 @@ body {
   font-family: var(--title-font);
   color: #fff;
   padding: 1rem;
+}
+.download__section {
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+  justify-items: center;
+}
+.download__text {
+  color: var(--black);
 }
