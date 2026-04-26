@@ -21,6 +21,7 @@ body {
   background-color: #306230;
   display: flex;
   flex-direction: column;
+  min-height: 100dvh;
 }
 .header {
   display: flex;
@@ -68,10 +69,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  justify-content: center;
   align-content: space-around;
   flex-wrap: wrap;
-  max-width: 75%;
+  min-width: 50%;
+  max-width: 80%;
   margin: 0 auto;
   flex: 1;
   padding: 1rem;
@@ -114,7 +115,6 @@ body {
   align-content: center;
   flex-wrap: wrap;
   background-color: #66c966;
-  height: 25%;
 }
 .footer__text {
   font-family: var(--title-font);
@@ -240,9 +240,10 @@ body {
   align-content: center;
 }
 .catalog__section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+  justify-content: center;
 }
 .deleteSection {
   display: flex;
@@ -294,8 +295,21 @@ body {
   display: flex;
   padding: 1rem;
   justify-content: center;
+  align-content: center;
   justify-items: center;
 }
 .download__text {
   color: var(--black);
+}
+@media screen and (max-width: 1000px) {
+  .main__content {
+    max-width: 100%;
+    width: 100%;
+  }
+  .search__results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
 }
