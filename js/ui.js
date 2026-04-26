@@ -315,14 +315,14 @@ const loadCatalog = async () => {
     const response = await fetch("../data/juegos.json")
     const data = await response.json()
     const catalog = document.querySelector(".catalog__section")
-    data.saga.juego.forEach((game => {
-        catalog.innerHTML += `<article class="card" data-id="${game.$.id}">
-        <h1 class="card__title">${game.titulo[0]}</h1>
-        <p class="card__developer"> ${game.desarrolladora[0]}</p>
-        <p class="card__publisher"> ${game.publicadora[0]}</p>
-        <p class="card__platform"> ${game.plataforma[0]}</p>
-        <p class="card__year"> ${game.anio[0]}</p>
-        <p class="card__mark"> ${game.puntuacion[0]}</p>`
+    data.forEach((game => {
+        catalog.innerHTML += `<article class="card" data-id="${game.id}">
+        <h1 class="card__title">${game.titulo}</h1>
+        <p class="card__developer"> ${game.desarrolladora}</p>
+        <p class="card__publisher"> ${game.publicadora}</p>
+        <p class="card__platform"> ${game.plataforma}</p>
+        <p class="card__year"> ${game.anio}</p>
+        <p class="card__mark"> ${game.puntuacion}</p>`
     }))
 }
 const checkEmpty = async () => {
