@@ -27,7 +27,7 @@ La aplicación está pensada para fans de la saga que quieran organizar su conte
 
 ---
 
-## 🌐 La Zelda API
+## La Zelda API
 
 La Zelda API es una API REST (Interfaz de Programación de Aplicaciones), las cuales permiten a distintas aplicaciones comunicarse entre sí. En el caso de esta API, tenemos varias categorias representadas con su endpoint, donde podemos extraer datos de juegos, enemigos, etc... de la saga Zelda. Aquí es donde entra función fetch de JS (nos permite mandar peticiones HTTP asincronas) y desde esta podemos mandar un HTTP/GET a esos endpoints y obtener el JSON con los datos que queremos. (Tambien podriamos mandar otro tipo de peticiones como POST pero GET es la relevante para el proyecto)
 
