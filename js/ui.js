@@ -23,7 +23,7 @@ const loadCards = (data, category, resultsSection) => {
                 <h1 class="card__title">${game.name}</h1>
                 <p class="card__description">${game.description}</p>
                 <time class="game__date">Fecha salida: ${game.released_date}</time>
-                <button class="card__button">Añadir a Favoritos</button>
+                <button class="card__button search">Añadir a Favoritos</button>
                 </article>`
             })
             break;
@@ -34,7 +34,7 @@ const loadCards = (data, category, resultsSection) => {
                     <p class="card__description">${character.description}</p>
                     <p class="character__gender">${character.gender}</p>
                     <p class="character__race">${character.race}</p>
-                    <button class="card__button">Añadir a Favoritos</button>
+                    <button class="card__button search">Añadir a Favoritos</button>
                 </article>`
             })
             break;
@@ -43,7 +43,7 @@ const loadCards = (data, category, resultsSection) => {
                 resultsSection.innerHTML += `<article class="card" data-type="dungeon">
                         <h1 class="card__title">${dungeon.name}</h1>
                         <p class="card__description">${dungeon.description}</p>
-                        <button class="card__button">Añadir a Favoritos</button>
+                        <button class="card__button search">Añadir a Favoritos</button>
                         </article>`
             })
             break;
@@ -52,7 +52,7 @@ const loadCards = (data, category, resultsSection) => {
                 resultsSection.innerHTML += `<article class="card" data-type="boss">
                             <h1 class="card__title">${boss.name}</h1>
                             <p class="card__description">${boss.description}</p>
-                            <button class="card__button">Añadir a Favoritos</button>
+                            <button class="card__button search">Añadir a Favoritos</button>
                             </article>`
 
             })
@@ -62,7 +62,7 @@ const loadCards = (data, category, resultsSection) => {
                 resultsSection.innerHTML += `<article class="card" data-type="place">
                                 <h1 class="card__title">${place.name}</h1>
                                 <p class="card__description">${place.description}</p>
-                                <button class="card__button">Añadir a Favoritos</button>
+                                <button class="card__button search">Añadir a Favoritos</button>
                                 </article>`
 
             })
@@ -72,7 +72,7 @@ const loadCards = (data, category, resultsSection) => {
                 resultsSection.innerHTML += `<article class="card" data-type="item">
                                     <h1 class="card__title">${item.name}</h1>
                                     <p class="card__description">${item.description}</p>
-                                    <button class="card__button">Añadir a Favoritos</button>
+                                    <button class="card__button search">Añadir a Favoritos</button>
                                     </article>`
             })
             break;
@@ -119,7 +119,7 @@ const searchAPI = async (categories, e) => {
         loadCards(data, category, resultsSection)
 
     })
-    cardButton = document.querySelectorAll(".card__button")
+    cardButton = Array.from(document.querySelectorAll(".card__button")).filter((it) => it.id != "modal__accept")
     cardButton.forEach((it) => {
         it.addEventListener("click", addToFavorites)
     })
@@ -128,6 +128,7 @@ const searchAPI = async (categories, e) => {
 
 const addToFavorites = async (e) => {
     const card = e.target.parentElement
+    if (e.target.id != "modal__accept") toggleButton(e)
     const cardChildren = Array.from(card.children).filter((it) => it != e.target)
     const title = cardChildren[0].textContent
     const description = cardChildren[1].textContent
@@ -159,6 +160,9 @@ const addToFavorites = async (e) => {
             createdAt: Date.now()
 
         });
+        const data = await getFavorites()
+        e.target.parentElement.setAttribute("data-id", `${data[data.length - 1].id}`)
+
     } catch (error) {
         console.error(error);
     }
@@ -281,15 +285,17 @@ const chooseOrder = (e) => {
 const deleteFavorite = async (e) => {
     const modalConfirm = await showModal(e)
     if (modalConfirm) {
+        if (e.target.classList.contains("search")) toggleButton(e)
         const card = e.target.parentElement;
 
         const favoriteId = card.dataset.id;
 
         const favoriteDocRef = doc(db, "favorites", favoriteId);
         await deleteDoc(favoriteDocRef);
-
-        card.remove();
-        await checkEmpty()
+        if (!e.target.classList.contains("search")) {
+            card.remove();
+            await checkEmpty()
+        }
     }
 
 }
@@ -365,6 +371,21 @@ const showModal = async (e) => {
         acceptButton.addEventListener("click", handleAccept)
     })
 }
+const toggleButton = (e) => {
+    e.target.classList.toggle("card__button")
+    e.target.classList.toggle("deleteButton")
+    if (e.target.classList.contains("deleteButton")) {
+        e.target.removeEventListener("click", addToFavorites)
+        e.target.addEventListener("click", deleteFavorite)
+        e.target.textContent = "Eliminar de favoritos"
+    } else {
+        e.target.removeEventListener("click", deleteFavorite)
+        e.target.addEventListener("click", addToFavorites)
+        e.target.textContent = "Añadir a favoritos"
+
+    }
+}
+
 
 
 
